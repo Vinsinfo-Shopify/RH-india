@@ -1,0 +1,53 @@
+
+{% liquid
+  assign product_item = closest.product | default: product
+  assign product_colors = product_item.metafields.custom.product_colors.value
+%}
+
+{% if product_colors != blank %}
+  <div class="product-colors" {{ block.shopify_attributes }}>
+    <div class="product-colors__header">
+      <span class="product-colors__heading">FABRIC</span>
+
+      {% if product_colors.size > 4 %}
+        <button
+          type="button"
+          class="product-colors__view-all"
+          aria-expanded="false"
+          onclick="
+            const wrapper = this.closest('.product-colors');
+            const expanded = wrapper.classList.toggle('is-expanded');
+            this.setAttribute('aria-expanded', expanded);
+            this.textContent = expanded ? 'VIEW LESS' : 'VIEW ALL';
+          "
+        >
+          VIEW ALL
+        </button>
+      {% endif %}
+    </div>
+
+    <div class="product-colors__list">
+      {% for fabric in product_colors %}
+        {% liquid
+          assign fabric_name = fabric.name.value | default: fabric.system.handle
+          assign fabric_color = fabric.swatch_color.value
+          assign fabric_image = fabric.swatch_image.value
+        %}
+
+        <div class="product-colors__item">
+          <button
+            type="button"
+            class="product-colors__swatch"
+            aria-label="{{ fabric_name | escape }}"
+            title="{{ fabric_name | escape }}"
+            {% if fabric_image != blank %}
+              style="background-image: url('{{ fabric_image | image_url: width: 100 }}');"
+            {% elsif fabric_color != blank %}
+              style="background-color: {{ fabric_color }};"
+            {% endif %}
+          ></button>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+{% endif %}

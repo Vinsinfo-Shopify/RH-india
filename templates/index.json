@@ -6,8 +6,12 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
+<<<<<<< HEAD
  */
 {
+=======
+ */{
+>>>>>>> 0081964 (Add my new folder or updates)
   "sections": {
     "hero_jVaWmY": {
       "type": "hero",
@@ -17,6 +21,10 @@
           "name": "t:names.heading",
           "settings": {
             "text": "<p>Browse our latest products</p>",
+<<<<<<< HEAD
+=======
+            "text_color": "{{ settings.color_palette.background }}",
+>>>>>>> 0081964 (Add my new folder or updates)
             "width": "fit-content",
             "max_width": "normal",
             "alignment": "left",
@@ -27,7 +35,10 @@
             "letter_spacing": "normal",
             "case": "none",
             "wrap": "pretty",
+<<<<<<< HEAD
             "text_color": "{{ settings.color_palette.background }}",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
             "background": false,
             "background_color": "#00000026",
             "corner_radius": 0,
@@ -49,7 +60,10 @@
             "custom_button_background": "rgba(0,0,0,0)",
             "custom_button_text": "{{ settings.color_palette.background }}",
             "custom_button_border": "{{ settings.color_palette.background }}",
+<<<<<<< HEAD
             "link_text_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
             "width": "fit-content",
             "custom_width": 100,
             "width_mobile": "fit-content",
@@ -70,7 +84,10 @@
         "custom_mobile_media": false,
         "media_type_1_mobile": "image",
         "media_type_2_mobile": "image",
+<<<<<<< HEAD
         "link": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
         "open_in_new_tab": false,
         "content_direction": "column",
         "vertical_on_mobile": true,
@@ -117,13 +134,19 @@
             "height": "fit",
             "custom_height": 100,
             "background_media": "none",
+<<<<<<< HEAD
             "background_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
             "video_position": "cover",
             "background_image_position": "cover",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
+<<<<<<< HEAD
             "border_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -141,12 +164,18 @@
                 "alignment": "left",
                 "type_preset": "h4",
                 "font": "var(--font-body--family)",
+<<<<<<< HEAD
                 "font_size": "1rem",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+<<<<<<< HEAD
                 "text_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -164,10 +193,13 @@
                 "label": "View all",
                 "open_in_new_tab": false,
                 "style_class": "link",
+<<<<<<< HEAD
                 "custom_button_background": "{{ settings.color_palette.foreground }}",
                 "custom_button_text": "{{ settings.color_palette.background }}",
                 "custom_button_border": "{{ settings.color_palette.background }}",
                 "link_text_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "width": "fit-content",
                 "custom_width": 100,
                 "width_mobile": "fit-content",
@@ -187,11 +219,17 @@
           "static": true,
           "settings": {
             "product_card_gap": 4,
+<<<<<<< HEAD
             "background_color": "",
             "border": "none",
             "border_width": 1,
             "border_opacity": 100,
             "border_color": "",
+=======
+            "border": "none",
+            "border_width": 1,
+            "border_opacity": 100,
+>>>>>>> 0081964 (Add my new folder or updates)
             "border_radius": 0,
             "padding-block-start": 0,
             "padding-block-end": 0,
@@ -207,7 +245,10 @@
                 "border": "none",
                 "border_width": 1,
                 "border_opacity": 100,
+<<<<<<< HEAD
                 "border_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "border_radius": 0,
                 "padding-block-start": 0,
                 "padding-block-end": 0,
@@ -230,7 +271,10 @@
                 "letter_spacing": "normal",
                 "case": "none",
                 "wrap": "pretty",
+<<<<<<< HEAD
                 "text_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "background": false,
                 "background_color": "#00000026",
                 "corner_radius": 0,
@@ -256,7 +300,10 @@
                 "line_height": "normal",
                 "letter_spacing": "normal",
                 "case": "none",
+<<<<<<< HEAD
                 "text_color": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "padding-block-start": 0,
                 "padding-block-end": 0,
                 "padding-inline-start": 0,
@@ -277,16 +324,26 @@
         "collection": "all",
         "layout_type": "grid",
         "carousel_on_mobile": false,
+<<<<<<< HEAD
         "max_products": 2,
         "columns": 2,
+=======
+        "max_products": 8,
+        "columns": 4,
+>>>>>>> 0081964 (Add my new folder or updates)
         "mobile_columns": "2",
         "mobile_card_size": "60cqw",
         "columns_gap": 8,
         "rows_gap": 24,
         "icons_style": "arrow",
         "icons_shape": "none",
+<<<<<<< HEAD
         "section_width": "full-width",
         "horizontal_alignment": "center",
+=======
+        "section_width": "page-width",
+        "horizontal_alignment": "flex-start",
+>>>>>>> 0081964 (Add my new folder or updates)
         "gap": 28,
         "background_color": "{{ settings.color_palette.background }}",
         "padding-block-start": 48,
@@ -298,4 +355,8 @@
     "hero_jVaWmY",
     "product_list_fa6P9H"
   ]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0081964 (Add my new folder or updates)

@@ -1,0 +1,99 @@
+
+{% liquid
+  assign regular_price = product.metafields.custom.regular_price.value
+  assign member_price = product.metafields.custom.member_price.value
+%}
+
+<div class="starting-price-block" {{ block.shopify_attributes }}>
+  {% if block.settings.heading != blank %}
+    <p class="starting-price-heading">
+      {{ block.settings.heading | escape }}
+    </p>
+  {% endif %}
+
+  {% if member_price != blank %}
+    <div class="starting-price-row">
+      <span>{{ block.settings.member_label | escape }}</span>
+      <strong>{{ member_price | money_with_currency }}</strong>
+    </div>
+  {% endif %}
+
+  {% if regular_price != blank %}
+    <div class="starting-price-row">
+      <span>{{ block.settings.regular_label | escape }}</span>
+      <strong>{{ regular_price | money_with_currency }}</strong>
+    </div>
+  {% endif %}
+
+  {% if block.settings.description != blank %}
+    <div class="starting-price-description">
+      {{ block.settings.description }}
+    </div>
+  {% endif %}
+</div>
+
+{% stylesheet %}
+  .starting-price-block {
+    margin: 16px 0;
+  }
+
+  .starting-price-heading {
+    margin: 0 0 10px;
+    font-weight: 600;
+  }
+
+  .starting-price-row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    gap: 8px 16px;
+    margin: 8px 0;
+    font-size: 14px;
+  }
+
+  .starting-price-row strong {
+    font-weight: 600;
+  }
+
+  .starting-price-description {
+    margin-top: 10px;
+    font-size: 14px;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "Starting prices",
+  "settings": [
+    {
+      "type": "text",
+      "id": "heading",
+      "label": "Heading",
+      "default": "Starting at"
+    },
+    {
+      "type": "text",
+      "id": "member_label",
+      "label": "Member price label",
+      "default": "Member price"
+    },
+    {
+      "type": "text",
+      "id": "regular_label",
+      "label": "Regular price label",
+      "default": "Regular price"
+    },
+    {
+      "type": "richtext",
+      "id": "description",
+      "label": "Description",
+      "default": "<p>Member pricing is available to eligible customers.</p>"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Starting prices"
+    }
+  ]
+}
+{% endschema %}

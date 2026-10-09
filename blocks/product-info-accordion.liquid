@@ -1,0 +1,228 @@
+
+{% liquid
+  assign product_item = closest.product
+  if product_item == blank
+    assign product_item = product
+  endif
+
+  assign details_points = product_item.metafields.custom.details_points.value
+  assign fabric_pdf = product_item.metafields.custom.fabric_care_pdf.value
+%}
+
+<div class="pdp-info-accordion" {{ block.shopify_attributes }}>
+
+  {% if block.settings.show_dimensions %}
+    <details class="pdp-info-accordion__item">
+      <summary class="pdp-info-accordion__heading">
+        <span>{{ block.settings.dimensions_heading | escape }}</span>
+        <span class="pdp-info-accordion__icon" aria-hidden="true"></span>
+      </summary>
+
+      {% if block.settings.dimensions_content != blank %}
+        <div class="pdp-info-accordion__content rte">
+          {{ block.settings.dimensions_content }}
+        </div>
+      {% endif %}
+    </details>
+  {% endif %}
+
+  {% if block.settings.show_details %}
+    <details class="pdp-info-accordion__item">
+      <summary class="pdp-info-accordion__heading">
+        <span>{{ block.settings.details_heading | escape }}</span>
+        <span class="pdp-info-accordion__icon" aria-hidden="true"></span>
+      </summary>
+
+      <div class="pdp-info-accordion__content">
+        {% if details_points != blank %}
+          <ul class="pdp-info-accordion__list">
+            {% for point in details_points %}
+              <li>{{ point | escape }}</li>
+            {% endfor %}
+          </ul>
+        {% else %}
+          <p>Add details to this product's Details points metafield.</p>
+        {% endif %}
+      </div>
+    </details>
+  {% endif %}
+
+  {% if block.settings.show_fabric_care %}
+    <div class="pdp-info-accordion__item pdp-info-accordion__download">
+      {% if fabric_pdf != blank %}
+        <a
+          class="pdp-info-accordion__heading"
+          href="{{ fabric_pdf.url }}"
+          download
+          target="_blank"
+          rel="noopener"
+          aria-label="{{ block.settings.fabric_care_heading | escape }} — download PDF"
+        >
+          <span>{{ block.settings.fabric_care_heading | escape }}</span>
+          <span class="pdp-info-accordion__arrow" aria-hidden="true">›</span>
+        </a>
+      {% else %}
+        <div class="pdp-info-accordion__heading">
+          <span>{{ block.settings.fabric_care_heading | escape }}</span>
+          <span class="pdp-info-accordion__arrow" aria-hidden="true">›</span>
+        </div>
+        {% if request.design_mode %}
+          <p class="pdp-info-accordion__content">
+            Add a PDF to the product's Fabric care PDF metafield.
+          </p>
+        {% endif %}
+      {% endif %}
+    </div>
+  {% endif %}
+
+</div>
+
+{% stylesheet %}
+  .pdp-info-accordion {
+    width: 100%;
+    color: #222;
+  }
+
+  .pdp-info-accordion__item {
+    margin: 0;
+    border-bottom: 1px solid #999;
+  }
+
+  .pdp-info-accordion__heading {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 17px 0;
+    color: inherit;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.4;
+    text-decoration: none;
+    list-style: none;
+    cursor: pointer;
+  }
+
+  .pdp-info-accordion__heading::-webkit-details-marker {
+    display: none;
+  }
+
+  .pdp-info-accordion__icon {
+    position: relative;
+    flex: 0 0 12px;
+  }
+
+  .pdp-info-accordion__icon::before,
+  .pdp-info-accordion__icon::after {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    content: "";
+    width: 10px;
+    height: 1px;
+    background: currentColor;
+  }
+
+  .pdp-info-accordion__icon::after {
+    transform: rotate(90deg);
+  }
+
+  .pdp-info-accordion__item[open]
+  .pdp-info-accordion__icon::after {
+    display: none;
+  }
+
+  .pdp-info-accordion__content {
+    padding: 0 0 17px;
+    font-size: 14px;
+    line-height: 1.6;
+  }
+
+  .pdp-info-accordion__content p {
+    margin: 0;
+  }
+
+  .pdp-info-accordion__list {
+    margin: 0;
+    padding-inline-start: 20px;
+  }
+
+  .pdp-info-accordion__list li {
+    margin-bottom: 6px;
+  }
+
+  .pdp-info-accordion__arrow {
+    font-size: 24px;
+    line-height: 1;
+  }
+
+  .pdp-info-accordion__download .pdp-info-accordion__heading {
+    cursor: pointer;
+  }
+{% endstylesheet %}
+
+{% schema %}
+{
+  "name": "PDP info accordion",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Dimensions"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_dimensions",
+      "label": "Show dimensions",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "dimensions_heading",
+      "label": "Dimensions heading",
+      "default": "DIMENSIONS"
+    },
+    {
+      "type": "richtext",
+      "id": "dimensions_content",
+      "label": "Dimensions content"
+    },
+    {
+      "type": "header",
+      "content": "Details"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_details",
+      "label": "Show details",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "details_heading",
+      "label": "Details heading",
+      "default": "DETAILS"
+    },
+    {
+      "type": "header",
+      "content": "Fabric care"
+    },
+    {
+      "type": "checkbox",
+      "id": "show_fabric_care",
+      "label": "Show fabric care download",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "fabric_care_heading",
+      "label": "Fabric care heading",
+      "default": "FABRIC CARE"
+    }
+  ],
+  "presets": [
+    {
+      "name": "PDP info accordion"
+    }
+  ]
+}
+{% endschema %}

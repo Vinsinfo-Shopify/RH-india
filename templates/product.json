@@ -6,8 +6,12 @@
  * or related systems. Please exercise caution as any changes
  * made to this file may be overwritten.
  * ------------------------------------------------------------
+<<<<<<< HEAD
  */
 {
+=======
+ */{
+>>>>>>> 0081964 (Add my new folder or updates)
   "sections": {
     "main": {
       "type": "product-information",
@@ -36,16 +40,26 @@
           "static": true,
           "settings": {
             "media_presentation": "grid",
+<<<<<<< HEAD
             "media_columns": "one",
             "image_gap": 30,
             "large_first_image": false,
             "icons_style": "arrow",
+=======
+            "media_columns": "two",
+            "image_gap": 4,
+            "large_first_image": false,
+>>>>>>> 0081964 (Add my new folder or updates)
             "slideshow_controls_style": "counter",
             "slideshow_mobile_controls_style": "dots",
             "thumbnail_position": "right",
             "thumbnail_width": 44,
             "thumbnail_radius": 0,
+<<<<<<< HEAD
             "aspect_ratio": "1/1.25",
+=======
+            "aspect_ratio": "adapt",
+>>>>>>> 0081964 (Add my new folder or updates)
             "constrain_to_viewport": true,
             "media_fit": "contain",
             "media_radius": 0,
@@ -118,7 +132,10 @@
                 "border_opacity": 100,
                 "border_color": "",
                 "border_radius": 0,
+<<<<<<< HEAD
                 "link": "",
+=======
+>>>>>>> 0081964 (Add my new folder or updates)
                 "open_in_new_tab": false,
                 "placeholder": "",
                 "padding-block-start": 0,
@@ -474,4 +491,8 @@
     "main",
     "product_recommendations_qggXJq"
   ]
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 0081964 (Add my new folder or updates)
