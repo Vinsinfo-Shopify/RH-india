@@ -1,0 +1,143 @@
+{{ 'section-rh-collection-list.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign subcollections = section.settings.subcollection_list
+  if subcollections == blank or subcollections.count == 0
+    assign subcollections = collection.metafields.custom.subcollections.value
+  endif
+-%}
+
+<div class="rh-collage-blueprint-root" id="rh-blueprint-{{ section.id }}">
+  <div class="rh-blueprint-canvas">
+
+    {%- for i in (1..5) -%}
+      {%- liquid
+        assign current_subcol = nil
+        assign banner_img = nil
+        assign gallery_img_1 = nil
+        assign gallery_img_2 = nil
+
+        assign idx = forloop.index0
+        if subcollections != blank
+          for col in subcollections
+            if forloop.index0 == idx
+              assign current_subcol = col
+              break
+            endif
+          endfor
+        endif
+
+        if current_subcol != blank
+          assign raw_banner = current_subcol.metafields.custom.banner_images.value | default: current_subcol.metafields.custom.banner_images
+          for b_img in raw_banner limit: 1
+            assign banner_img = b_img
+          endfor
+
+          assign raw_gallery = current_subcol.metafields.custom.gallery_images.value | default: current_subcol.metafields.custom.gallery_images
+          for g_img in raw_gallery limit: 2
+            if forloop.index == 1
+              assign gallery_img_1 = g_img
+            elsif forloop.index == 2
+              assign gallery_img_2 = g_img
+            endif
+          endfor
+        endif
+      -%}
+
+      <div class="rh-collage-block">
+
+        <!-- Top Left-Aligned Title -->
+        <div class="rh-unit-header">
+          <h2 class="rh-unit-title">
+            {%- if current_subcol != blank and current_subcol.title != blank -%}
+              <a href="{{ current_subcol.url }}">{{ current_subcol.title }}</a>
+            {%- else -%}
+              COLLECTION SLOT {{ i }}
+            {%- endif -%}
+          </h2>
+        </div>
+
+        <!-- Collage Unit (1 Outer Rectangle Split into 2 Halves) -->
+        <div class="rh-big-rectangle">
+          
+          <!-- Top Half: Hero Banner -->
+          <div class="rh-half-top">
+            {%- if banner_img != blank -%}
+              <a href="{{ current_subcol.url | default: '#' }}" class="rh-slot-anchor">
+                {{
+                  banner_img
+                  | image_url: width: 2400
+                  | image_tag: loading: 'lazy', class: 'rh-fitted-img'
+                }}
+              </a>
+            {%- else -%}
+              <div class="rh-empty-slot rh-empty-banner">
+                <span class="rh-slot-label">Top Half: Banner Image</span>
+              </div>
+            {%- endif -%}
+          </div>
+
+          <!-- Bottom Half: Left Square (35%) + Right Rectangle (65%) -->
+          <div class="rh-half-bottom">
+            
+            <div class="rh-slot-left-square">
+              {%- if gallery_img_1 != blank -%}
+                <a href="{{ current_subcol.url | default: '#' }}" class="rh-slot-anchor">
+                  {{
+                    gallery_img_1
+                    | image_url: width: 1200
+                    | image_tag: loading: 'lazy', class: 'rh-fitted-img'
+                  }}
+                </a>
+              {%- else -%}
+                <div class="rh-empty-slot rh-empty-square">
+                  <span class="rh-slot-label">Left: Square</span>
+                </div>
+              {%- endif -%}
+            </div>
+
+            <div class="rh-slot-right-rect">
+              {%- if gallery_img_2 != blank -%}
+                <a href="{{ current_subcol.url | default: '#' }}" class="rh-slot-anchor">
+                  {{
+                    gallery_img_2
+                    | image_url: width: 1800
+                    | image_tag: loading: 'lazy', class: 'rh-fitted-img'
+                  }}
+                </a>
+              {%- else -%}
+                <div class="rh-empty-slot rh-empty-rect">
+                  <span class="rh-slot-label">Right: Rectangle</span>
+                </div>
+              {%- endif -%}
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    {%- endfor -%}
+
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "RH Collage Grid (5x)",
+  "tag": "section",
+  "class": "section-rh-collage",
+  "settings": [
+    {
+      "type": "collection_list",
+      "id": "subcollection_list",
+      "label": "Subcollections"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RH Collage Grid (5x)"
+    }
+  ]
+}
+{% endschema %}
