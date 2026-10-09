@@ -1,0 +1,11 @@
+{
+  "sections": {
+    "rh_collections": {
+      "type": "rh-collection-list",
+      "settings": {}
+    }
+  },
+  "order": [
+    "rh_collections"
+  ]
+}

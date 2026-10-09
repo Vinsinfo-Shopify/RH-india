@@ -1,0 +1,232 @@
+{{ 'section-rh-collection-list.css' | asset_url | stylesheet_tag }}
+
+{%- liquid
+  assign ns = section.settings.metafield_namespace | default: 'custom'
+  assign k_subcol = section.settings.metafield_key_subcollections | default: 'subcollections'
+  assign k_banner = section.settings.metafield_key_banner | default: 'banner_images'
+  assign k_gallery = section.settings.metafield_key_gallery | default: 'gallery_images'
+
+  # Dynamically retrieve parent subcollections via namespace & key settings
+  assign subcollections = collection.metafields[ns][k_subcol].value
+-%}
+
+<div class="rh-collage-blueprint-root" id="rh-blueprint-{{ section.id }}">
+  <div class="rh-blueprint-canvas">
+
+    {%- if subcollections != blank and subcollections.size > 0 -%}
+      {%- for current_subcol in subcollections -%}
+        {%- liquid
+          assign banner_img = nil
+
+          # Banner image dereference
+          assign raw_banner = current_subcol.metafields[ns][k_banner].value | default: current_subcol.metafields[ns][k_banner]
+          for b_img in raw_banner limit: 1
+            assign banner_img = b_img
+          endfor
+
+          # Gallery images dereference
+          assign raw_gallery = current_subcol.metafields[ns][k_gallery].value | default: current_subcol.metafields[ns][k_gallery]
+          
+          # Count valid gallery images up to a max of 4
+          assign gallery_count = 0
+          for g_img in raw_gallery limit: 4
+            assign gallery_count = gallery_count | plus: 1
+          endfor
+        -%}
+
+        <div class="rh-collage-block" id="subcol-block-{{ current_subcol.id }}">
+
+          <!-- Subcollection Title (e.g., JENNIFER) -->
+          <div class="rh-unit-header">
+            <h2 class="rh-unit-title">
+              <a href="{{ current_subcol.url }}">{{ current_subcol.title }}</a>
+            </h2>
+          </div>
+
+          <!-- Collage Frame -->
+          <div class="rh-big-rectangle">
+            
+            <!-- 1. Top Banner (Full Image, Never Cropped) -->
+            <div class="rh-half-top">
+              {%- if banner_img != blank -%}
+                <a href="{{ current_subcol.url }}" class="rh-slot-anchor" aria-label="{{ current_subcol.title | escape }}">
+                  {{
+                    banner_img
+                    | image_url: width: 3840
+                    | image_tag: loading: 'lazy', class: 'rh-banner-uncropped'
+                  }}
+                </a>
+              {%- else -%}
+                <div class="rh-empty-slot rh-empty-banner">
+                  <span class="rh-slot-label">No Banner Image</span>
+                </div>
+              {%- endif -%}
+            </div>
+
+            <!-- 2. Bottom Row: Dynamically scales based on image count (1: 100%, 2: 50%, 3: 33.33%, 4: 25%) -->
+            {%- if gallery_count > 0 -%}
+              <div class="rh-gallery-dynamic-row" data-count="{{ gallery_count }}">
+                {%- for g_img in raw_gallery limit: 4 -%}
+                  <div class="rh-gallery-item">
+                    <a href="{{ current_subcol.url }}" class="rh-slot-anchor" aria-label="{{ current_subcol.title | escape }} View {{ forloop.index }}">
+                      {{
+                        g_img
+                        | image_url: width: 1800
+                        | image_tag: loading: 'lazy', class: 'rh-gallery-img'
+                      }}
+                    </a>
+                  </div>
+                {%- endfor -%}
+              </div>
+            {%- endif -%}
+
+          </div>
+
+        </div>
+      {%- endfor -%}
+
+    {%- else -%}
+      <div class="rh-empty-slot" style="padding: 50px 20px; text-align: center;">
+        <span class="rh-slot-label">
+          No subcollections found in <code>{{ ns }}.{{ k_subcol }}</code> on this collection.
+        </span>
+      </div>
+    {%- endif -%}
+
+  </div>
+</div>
+
+<style>
+  #rh-blueprint-{{ section.id }} .rh-half-top {
+    width: 100% !important;
+    height: auto !important;
+    line-height: 0 !important;
+    overflow: visible !important;
+  }
+  #rh-blueprint-{{ section.id }} .rh-half-top .rh-slot-anchor {
+    display: block !important;
+    width: 100% !important;
+    height: auto !important;
+  }
+  #rh-blueprint-{{ section.id }} .rh-banner-uncropped {
+    width: 100% !important;
+    height: auto !important;
+    max-height: none !important;
+    object-fit: contain !important;
+    display: block !important;
+  }
+
+  /* Dynamic Multi-column Flex/Grid Row */
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row {
+    display: grid !important;
+    gap: 4px !important;
+    width: 100% !important;
+    margin-top: 4px !important;
+  }
+
+  /* 1 Image = 100% */
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="1"] {
+    grid-template-columns: 1fr !important;
+  }
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="1"] .rh-gallery-img {
+    aspect-ratio: 16 / 9 !important;
+  }
+
+  /* 2 Images = 50% each */
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="2"] {
+    grid-template-columns: repeat(2, 1fr) !important;
+  }
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="2"] .rh-gallery-img {
+    aspect-ratio: 16 / 10 !important;
+  }
+
+  /* 3 Images = 33.33% each */
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="3"] {
+    grid-template-columns: repeat(3, 1fr) !important;
+  }
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="3"] .rh-gallery-img {
+    aspect-ratio: 4 / 3 !important;
+  }
+
+  /* 4 Images = 25% each */
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="4"] {
+    grid-template-columns: repeat(4, 1fr) !important;
+  }
+  #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="4"] .rh-gallery-img {
+    aspect-ratio: 1 / 1 !important;
+  }
+
+  #rh-blueprint-{{ section.id }} .rh-gallery-item {
+    line-height: 0 !important;
+    width: 100% !important;
+    overflow: hidden !important;
+  }
+
+  #rh-blueprint-{{ section.id }} .rh-gallery-item .rh-slot-anchor {
+    display: block !important;
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  #rh-blueprint-{{ section.id }} .rh-gallery-img {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    display: block !important;
+  }
+
+  /* Responsive behavior on small mobile screens */
+  @media (max-width: 640px) {
+    #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="3"],
+    #rh-blueprint-{{ section.id }} .rh-gallery-dynamic-row[data-count="4"] {
+      grid-template-columns: repeat(2, 1fr) !important;
+    }
+  }
+</style>
+
+{% schema %}
+{
+  "name": "RH Collection List",
+  "tag": "section",
+  "class": "section-rh-collage",
+  "settings": [
+    {
+      "type": "header",
+      "content": "Metafield Configuration"
+    },
+    {
+      "type": "text",
+      "id": "metafield_namespace",
+      "label": "Metafield Namespace",
+      "default": "custom",
+      "info": "Default: custom"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key_subcollections",
+      "label": "Subcollections Key",
+      "default": "subcollections",
+      "info": "Parent collection list metafield key"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key_banner",
+      "label": "Banner Images Key",
+      "default": "banner_images",
+      "info": "Subcollection banner list metafield key"
+    },
+    {
+      "type": "text",
+      "id": "metafield_key_gallery",
+      "label": "Gallery Images Key",
+      "default": "gallery_images",
+      "info": "Subcollection gallery list metafield key"
+    }
+  ],
+  "presets": [
+    {
+      "name": "RH Collection List"
+    }
+  ]
+}
+{% endschema %}
