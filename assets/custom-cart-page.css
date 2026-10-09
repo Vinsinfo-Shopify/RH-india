@@ -1,0 +1,24 @@
+
+/* Full product image on the Horizon cart page */
+.cart-page .cart-items__media {
+  width: 100% !important;
+  max-width: none !important;
+}
+
+.cart-page .cart-items__media-container {
+  width: 100% !important;
+  max-width: none !important;
+  aspect-ratio: auto !important;
+}
+
+.cart-page .cart-items__media img,
+.cart-page .cart-items__media-image {
+  display: block !important;
+  width: 100% !important;
+  max-width: 100% !important;
+  height: auto !important;
+  max-height: none !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
