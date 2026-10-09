@@ -1,15 +1,11 @@
 {
   "sections": {
-    "rh_collection_list": {
+    "rh_collections": {
       "type": "rh-collection-list",
-      "settings": {
-        "cta_text": "EXPLORE THE COLLECTION",
-        "padding_top": 40,
-        "padding_bottom": 60
-      }
+      "settings": {}
     }
   },
   "order": [
-    "rh_collection_list"
+    "rh_collections"
   ]
 }
