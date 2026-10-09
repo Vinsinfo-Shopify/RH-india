@@ -1,0 +1,182 @@
+
+/* CUSTOM PDP: size and fabric swatches */
+
+/* Size buttons */
+variant-picker .variant-option--buttons:not(.variant-option--swatches) {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 3px;
+}
+
+variant-picker .variant-option--buttons:not(.variant-option--swatches)
+.variant-option__button-label {
+  flex: 1 1 0;
+  min-width: 0;
+  min-height: 40px;
+  padding: 8px;
+  border: 0;
+  border-radius: 0;
+  background: #e8e8e8;
+  color: #222;
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Selected size */
+variant-picker .variant-option--buttons:not(.variant-option--swatches)
+.variant-option__button-label:has(input:checked) {
+  background: #222;
+  color: #fff;
+}
+
+/* Fabric swatch layout */
+variant-picker .variant-option--swatches {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 5px;
+}
+
+/* Actual swatch button */
+variant-picker .variant-option__button-label--has-swatch {
+  flex: 0 0 auto;
+  min-width: 0;
+  min-height: 0;
+  padding: 2px;
+  border: 1px solid transparent;
+  border-radius: 0;
+  background: transparent;
+}
+
+/* Square fabric swatches */
+variant-picker .variant-option__button-label--has-swatch .swatch {
+  width: 48px;
+  height: 48px;
+  max-width: none;
+  max-height: none;
+  border-radius: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+/* Selected fabric */
+variant-picker .variant-option__button-label--has-swatch:has(input:checked) {
+  outline: 1px solid #222;
+  outline-offset: 1px;
+}
+
+/* Horizon PDP rectangular swatches */
+variant-picker .variant-option--swatches {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+variant-picker .variant-option--swatches
+.variant-option__button-label--has-swatch {
+  display: inline-flex !important;
+  align-items: center;
+  justify-content: center;
+  width: 54px !important;
+  height: 54px !important;
+  min-width: 54px !important;
+  min-height: 54px !important;
+  padding: 0 !important;
+  border-radius: 0 !important;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+
+variant-picker .variant-option--swatches .swatch {
+  display: block !important;
+  width: 100% !important;
+  height: 100% !important;
+  min-width: 0 !important;
+  min-height: 0 !important;
+  border-radius: 0 !important;
+  background: var(--swatch-background) center / cover no-repeat !important;
+}
+
+/* Selected swatch outline */
+variant-picker .variant-option--swatches
+.variant-option__button-label--has-swatch:has(input:checked) {
+  outline: 1px solid #222;
+  outline-offset: 2px;
+}
+
+.product-colors {
+  margin-block: 20px;
+}
+
+.product-colors__header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 14px;
+}
+
+.product-colors__heading {
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.product-colors__view-all {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: inherit;
+  font-size: 14px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+}
+
+.product-colors__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.product-colors__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+}
+
+.product-colors__swatch {
+  display: block;
+  width: 36px;
+  aspect-ratio: 1;
+  padding: 0;
+  border: 1px solid #d5d5d5;
+  border-radius: 50%;
+  background-color: #f5f5f5;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  cursor: pointer;
+}
+
+.product-colors__name {
+  font-size: 14px;
+  text-align: center;
+}
+
+/* Show four swatches initially */
+.product-colors:not(.is-expanded)
+.product-colors__item:nth-child(n + 5) {
+  display: none;
+}
+
+
+/* Mobile */
+@media screen and (max-width: 767px) {
+  variant-picker .variant-option__button-label--has-swatch .swatch {
+    width: 42px;
+    height: 42px;
+  }
+}

@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {%- doc -%}
   Renders a swatch either from a variant image object or a swatch object.
 
@@ -8,11 +9,22 @@
 
   @example
   {% render 'swatch', swatch: swatch, variant_image: variant_image, mode: 'unscaled', label: option_value.name %}
+=======
+
+{%- doc -%}
+  Renders a swatch from a swatch object or variant image.
+
+  @param {object} swatch - Shopify swatch object
+  @param {object} [variant_image] - Variant featured media or image
+  @param {string} [mode] - unscaled, filter, or pill
+  @param {string} [label] - Accessible color name
+>>>>>>> 0081964 (Add my new folder or updates)
 {%- enddoc -%}
 
 {% liquid
   assign swatch_value = null
   assign extra_classes = ''
+<<<<<<< HEAD
   if settings.show_variant_image and variant_image
     assign swatch_image_width = settings.variant_swatch_width | times: 2
     assign swatch_image_url = variant_image | image_url: width: swatch_image_width
@@ -22,6 +34,20 @@
     assign swatch_image_url = swatch.image | image_url: width: 80
     assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
   elsif swatch.color
+=======
+
+  if settings.show_variant_image and variant_image != blank
+    assign swatch_image_width = settings.variant_swatch_width | default: 44 | times: 2
+    assign swatch_image_url = variant_image | image_url: width: swatch_image_width
+    assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
+    assign extra_classes = extra_classes | append: ' swatch--variant-image'
+
+  elsif swatch.image != blank
+    assign swatch_image_url = swatch.image | image_url: width: 80
+    assign swatch_value = 'url(' | append: swatch_image_url | append: ')'
+
+  elsif swatch.color != blank
+>>>>>>> 0081964 (Add my new folder or updates)
     assign swatch_value = 'rgb(' | append: swatch.color.rgb | append: ')'
   endif
 
@@ -39,6 +65,7 @@
   class="
     swatch
     {{ extra_classes }}
+<<<<<<< HEAD
     {% if swatch_value == null %} swatch--unavailable{% endif %}
   "
   style="
@@ -49,4 +76,23 @@
 </span>
 {%- if label != blank -%}
   <span class="visually-hidden">{{ label }}</span>
+=======
+    {% if swatch_value == null %}swatch--unavailable{% endif %}
+  "
+  style="
+    --swatch-background: {{ swatch_value | default: 'transparent' }};
+    {% if swatch.image != blank and settings.show_variant_image == false %}
+      --swatch-focal-point: {{ swatch.image.presentation.focal_point }};
+    {% endif %}
+  "
+  {% if label != blank %}
+    role="img"
+    aria-label="{{ label | escape }}"
+  {% endif %}
+>
+</span>
+
+{%- if label != blank -%}
+  <span class="visually-hidden">{{ label | escape }}</span>
+>>>>>>> 0081964 (Add my new folder or updates)
 {%- endif -%}
